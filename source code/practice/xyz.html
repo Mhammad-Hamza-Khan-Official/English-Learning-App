@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Todo App with LocalStorage</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+    }
+
+    input {
+      padding: 8px;
+    }
+
+    button {
+      padding: 8px;
+      cursor: pointer;
+    }
+
+    li {
+      cursor: pointer;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <table>
+    <tr>
+      td
+    </tr>
+  </table>
+
+  <h2>Todo App (Data Saved)</h2>
+
+  <input type="text" id="todoInput" placeholder="Enter task">
+  <button id="addBtn">Add</button>
+
+  <ul id="todoList"></ul>
+
+  <script>
+    const input = document.getElementById("todoInput");
+    const button = document.getElementById("addBtn");
+    const list = document.getElementById("todoList");
+
+    // Load saved todos on page load
+    let todos = JSON.parse(localStorage.getItem("todos")) || [];
+
+    function renderTodos() {
+      list.innerHTML = "";
+      todos.forEach((todo, index) => {
+        const li = document.createElement("li");
+        li.innerText = todo;
+
+        // remove todo on click
+        li.addEventListener("click", () => {
+          todos.splice(index, 1);
+          saveTodos();
+        });
+
+        list.appendChild(li);
+      });
+    }
+
+    function saveTodos() {
+      localStorage.setItem("todos", JSON.stringify(todos));
+      renderTodos();
+    }
+
+    button.addEventListener("click", () => {
+      if (input.value.trim() === "") return;
+
+      todos.push(input.value);
+      input.value = "";
+      saveTodos();
+    });
+
+    // initial render
+    renderTodos();
+  </script>
+
+</body>
+</html>

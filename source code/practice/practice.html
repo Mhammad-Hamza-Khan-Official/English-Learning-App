@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../utilaty/utilaty.css">
+</head>
+
+<body>
+    <div class="container flex-center">
+        <div class="inner-container flex-center ">
+            <a href="#" class="cross">
+                <img src="../../assets/icons/crossgrey.svg" alt="">
+            </a>
+            <div class="contain flex-column ">
+                <div class="level-contain flex-center">
+                    <div class="level">
+                        <div class="fill">
+                        </div>
+                    </div>
+                </div>
+                <div class="text-main flex-justify-center">
+                    <div class="text-contain flex-column flex-space-between ">
+                        <h1 class="flex-align-center heading">Speak this sentence</h1>
+    
+                        <p id="sentence" class="flex-center"><a href="#">
+                                <img src="../../assets/icons/speak.svg" alt="speak">
+                            </a>The quick brown fox jumps over the lazy dog.</p>
+    
+                        <a href="#" class="btn">
+                            <button class="flex-center"> <img src="../../assets/icons/mic.svg" alt="mic">Tap to speak</button>
+                        </a>
+    
+                    </div>
+                </div>
+            </div>
+            <div class="align-self-start star flex-align-center">
+                <img src="../../assets/icons/star.svg" alt="">
+                <p id=" star">
+                5
+                </p>
+            </div>
+        </div>
+    </div>
+<!-- --------------------------------------------------------- -->
+    <footer class="absolute flex-center">
+        <div class="footer-contain  flex-align-center" id="correct-contain">
+            <div class="footer-content flex flex-align-center " id="text-correct">
+                <div class="footer-img flex-center">
+                    <img src="../../assets/icons/tick.svg" alt="" id="tick">
+                </div>
+                <div class="footer-text flex-column">
+                    <h1>Greate job.</h1>
+                    <p>You pronounced 5 words correctly.</p>
+                </div>
+            </div>
+
+            <div class="btn-footer flex">
+                <a href="#">
+                    <button id="correct">
+                        Next
+                    </button>
+                </a>
+            </div>
+        </div> 
+ <!-- -------------------------------------------------------------- -->
+         <div class="footer-contain  flex-align-center" id="wrong-contain">
+            <div class="footer-content flex flex-align-center " id="text-wrong">
+                <div class="footer-img flex-center">
+                    <img src="../../assets/icons/cross.svg" alt="" id="tick">
+                </div>
+                <div class="footer-text flex-column">
+                    <h1>Try again later.</h1>
+                    <p>Keep it up.</p>
+                </div>
+            </div>
+
+            <div class="btn-footer flex">
+                <a href="#" >
+                    <button id="wrong">
+                        Next
+                    </button>
+                </a>
+            </div>
+        </div> 
+ <!-- -------------------------------------------------------------- -->
+         <div class="footer-contain  flex-align-center" id="no-voice-contain">
+            <div class="footer-content flex flex-align-center " id="text-no-voice">
+                <div class="footer-img flex-center">
+                    <img src="../../assets/icons/cross.svg" alt="" id="tick">
+                </div>
+                <div class="footer-text flex-column">
+                    <h1>Try again later.</h1>
+                    <p>Keep it up.</p>
+                </div>
+            </div>
+
+            <div class="btn-footer flex">
+                <a href="#" > 
+                    <button id="no-voice">
+                        Next
+                    </button>
+                </a>
+            </div>
+        </div> 
+    </footer>
+    <script src="./script.js"></script>
+</body>
+
+</html>
