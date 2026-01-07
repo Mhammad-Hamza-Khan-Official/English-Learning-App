@@ -6,8 +6,8 @@ const StrToArrSpliter = (arr) => {
   });
 };
 
-const PerfectSentences = [
-//    //  Present Perfect
+const Perfect = [
+  //    //  Present Perfect
   "I have finished my homework.",
   "She has completed the task.",
   "They have visited Lahore.",
@@ -26,10 +26,10 @@ const PerfectSentences = [
   "She will have completed the course next month.",
   "They will have arrived by tomorrow.",
   "We will have learned React by next year.",
-  "He will have written the report before Monday."
+  "He will have written the report before Monday.",
 ];
 
-const ContinuousSentences = [
+const Continuous = [
   //  Present Continuous
   "I am studying English.",
   "She is watching TV.",
@@ -49,174 +49,229 @@ const ContinuousSentences = [
   "She will be working at 9 AM.",
   "They will be traveling next week.",
   "We will be waiting for you.",
-  "He will be playing football."
+  "He will be playing football.",
 ];
 
+const PerfectContinuous = [
+  // 🔹 Present Perfect Continuous
+  "I have been studying for two hours.",
+  "She has been working here since 2022.",
+  "They have been playing cricket all day.",
+  "We have been learning JavaScript.",
+  "He has been writing a letter.",
 
+  // 🔹 Past Perfect Continuous
+  "I had been studying before the exam started.",
+  "She had been waiting for an hour.",
+  "They had been working all night.",
+  "We had been watching TV before dinner.",
+  "He had been reading a book.",
 
+  // 🔹 Future Perfect Continuous
+  "I will have been studying for three hours by 8 PM.",
+  "She will have been working here for five years.",
+  "They will have been traveling all day.",
+  "We will have been waiting since morning.",
+  "He will have been playing football by evening.",
+];
 
+const Indefinite = [
+   // Present Simple
+    "I play football every day.",       // regular verb (play)
+    "She goes to school by bus.",       // irregular verb (go)
+    "They watch movies on weekends.",   // regular verb (watch)
+    "He has a cat.",                     // irregular verb (have)
+
+    // Past Simple
+    "I visited my grandmother yesterday.",   // regular verb (visit → visited)
+    "He went to the market last night.",    // irregular verb (go → went)
+    "We played cricket last week.",         // regular verb (play → played)
+    "She had a car accident last year.",    // irregular verb (have → had)
+
+    // Future Simple
+    "I will call you tomorrow.",            // regular verb (call)
+    "She will go to Paris next year.",      // irregular verb (go → will go)
+    "They will watch a movie tonight.",     // regular verb (watch)
+    "He will have a meeting at 5 PM."      // irregular verb (have → will have)
+]
 
 function CheckWhichTense(str) {
   const Sentence = str.split(" ");
 
   const RemoveCommas = (arr) => arr.toString().replaceAll(",", " ");
-  
-  function CheckPerfectTense(){
-    /* ================= PRESENT PERFECT ================= */
+
+// ------------------------------------------------------------
+  // ====================Continuous=============
+  const CheckContinuousTense = () => {
+    const Present = () => {
+      const IsAmAreIdx = Sentence.findIndex((word) =>
+        ["is", "am", "are"].includes(word)
+      );
+      if (IsAmAreIdx === -1) return false;
+      const nextWord = Sentence[IsAmAreIdx + 1];
+      return nextWord.endsWith("ing");
+    };
+
+    const Past = () => {
+      const wasWereIdx = Sentence.findIndex((word) =>
+        ["was", "were"].includes(word)
+      );
+      if (wasWereIdx == -1) return false;
+      const nextWord = Sentence[wasWereIdx + 1];
+      return nextWord.endsWith("ing");
+    };
+
+    const Future = () => {
+      const willIdx = Sentence.findIndex((word) => ["will"].includes(word));
+      if (willIdx == -1) return false;
+      const nextWord = Sentence[willIdx + 1];
+      const Verb = Sentence[willIdx + 2];
+      return nextWord === "be" && Verb.endsWith("ing");
+    };
+
+    if (Present()) console.log("This is Present Continuous Sentence");
+    else if (Past()) console.log("This is Past Continuous Sentence");
+    else if (Future()) console.log("This is Future Continuous Sentence");
+    else console.log("This is NOT Continuous Sentence");
+  };
+// -----------------------------------------------------------
+  // =========================Perfect Continuous===============
+  const CheckPerfectContinuousTense = () => {
+    const Present = () => {
+      const haveIdx = Sentence.findIndex((word) =>
+        ["has", "have"].includes(word)
+      );
+      if (haveIdx === -1){ 
+        return false
+      };
+      const nextWord = Sentence[haveIdx + 1];
+      const previousWord = Sentence[haveIdx - 1]
+      const Verb = Sentence[haveIdx + 2];
+      console.log(nextWord);
+      console.log(previousWord);
+      console.log(Verb);
+      
+      if( nextWord === "been" && Verb.endsWith("ing") && previousWord !== "will"){
+        return true
+      }
+    };
+
+    const Past = () => {
+      const hadIdx = Sentence.findIndex((word) => ["had"].includes(word));
+      if (hadIdx === -1) return false;
+      const nextWord = Sentence[hadIdx + 1];
+      const Verb = Sentence[hadIdx + 2];
+      if( nextWord === "been" && Verb.endsWith("ing")){
+        return true
+      }
+    };
+
+    const Future = () => {
+      const willIdx = Sentence.findIndex((word) => ["will"].includes(word));
+      if (willIdx === -1) return false;
+      
+      const nextWord = Sentence[willIdx + 1];
+      const Verb = Sentence[willIdx + 3];
+      console.log(nextWord);
+      console.log(Verb);
+      
+      if( nextWord === "have" && Verb.endsWith("ing")){
+        return true
+      }
+    };
+
+    if (Present()) console.log("This is Present Perfect Continuous Sentence");
+    else if (Past()) console.log("This is Past Perfect Continuous Sentence");
+    else if (Future()) console.log("This is Future Perfect Continuous Sentence");
+    else console.log("This is NOT Perfect Continuous Sentence");
+  };
+// ------------------------------------------------------------
+  // =========================Peerfect===========
+  const CheckPerfectTense = () => {
     const PresentPerfect = () => {
       const haveIdx = Sentence.findIndex((word) =>
-        ["have", "have.", "has", "has."].includes(word)
+        ["have", "has"].includes(word)
       );
-  
-      const containWillORHad = Sentence.some((word) =>
-        ["will", "will.", "had", "had."].includes(word)
-      );
-  
-      if (haveIdx === -1 || containWillORHad) return [false, Sentence];
-  
+      if (haveIdx === -1) return [false, Sentence];
       const nextWord = Sentence[haveIdx + 1];
-      const stopWords = ["a", "an", "the", "my", "your"];
-  
-      if (!nextWord || stopWords.includes(nextWord)) {
-        return [false, Sentence];
-      }
-  
+      if (!nextWord || nextWord === "been") return [false, Sentence]; // skip Perfect Continuous
       const sentenceStr = RemoveCommas(Sentence);
-  
-      if (sentenceStr.endsWith("has.") || sentenceStr.endsWith("have.")) {
-        return [false, Sentence];
-      }
-  
+      if (sentenceStr.endsWith("have.") || sentenceStr.endsWith("has.")) return [false, Sentence];
       return [true, Sentence];
     };
-  
-    /* ================= PAST PERFECT ================= */
+
     const PastPerfect = () => {
-      const hadIdx = Sentence.findIndex((word) => ["had", "had."].includes(word));
-      const containHad = Sentence.some((word => ["had", "had."].includes(word)))
-      const string = RemoveCommas(Sentence)
-  
+      const hadIdx = Sentence.findIndex((word) => ["had"].includes(word));
       if (hadIdx === -1) return [false, Sentence];
-  
-  
-      if (!string.endsWith("had.") && containHad) {
-        return [true, Sentence];
-      }
-  
-      return [false, Sentence];
+      const nextWord = Sentence[hadIdx + 1];
+      if (nextWord === "been") return [false, Sentence]; // skip Perfect Continuous
+      return [true, Sentence];
     };
-  
-    /* ================= FUTURE PERFECT ================= */
+
     const FuturePerfect = () => {
       const willIdx = Sentence.findIndex((word) => word === "will");
-  
-      if (willIdx === -1) return [false, Sentence];
-  
+      if (willIdx === -1) {return [false, Sentence]}
       const nextWord = Sentence[willIdx + 1];
-  
-      if (nextWord === "have") {
-        return [true, Sentence];
-      }else{
-        return [false, Sentence];
-      }
-  
+      const Verb = Sentence[willIdx + 2];
+      if (nextWord === "have" && Verb !== "been") return [true, Sentence];
+      return [false, Sentence];
     };
-  
-    /* ================= FINAL CHECK ================= */
-  const present = PresentPerfect();
-  const past = PastPerfect();
-  const future = FuturePerfect();
-  
-  if (present[0]) {
-    console.log("This is Present Perfect Tense");
-    console.log(RemoveCommas(present[1]));
-    return true;
-  
-  } else if (past[0]) {
-    console.log("This is Past Perfect Tense");
-    console.log(RemoveCommas(past[1]));
-    return true;
-  
-  } else if (future[0]) {
-    console.log("This is Future Perfect Tense");
-    console.log(RemoveCommas(future[1]));
-    return true;
-  
-  } else {
-    console.log("This is not a Perfect Tense");
-    return false
-  }
-  }
-  
-  function CheckContinuousTense() {
-    // ======================Present===================
-    const Present = () => {
-      const IsAmAreIdx = Sentence.findIndex((word) => 
-        ["is" , "am" , "are"].includes(word)
-      )
 
-      if (IsAmAreIdx === -1) return false;
+    const present = PresentPerfect();
+    const past = PastPerfect();
+    const future = FuturePerfect();
 
-      const nextWord = Sentence[IsAmAreIdx + 1];
-
-      if (nextWord.endsWith("ing")) {
-        console.log(nextWord);
-        return true
-      }else{
-        return false
-      }
-      
-    }
-
-    // ========================Past=================
-    const Past =() => {
-
-      const wasWereIdx = Sentence.findIndex((word) => ["was"||"were"].includes(word))
-
-      if(wasWereIdx == -1) return false;
-      const nextWord = Sentence[wasWereIdx + 1]
-      if (nextWord.endsWith("ing")) {
-        return true
-      }else{
-        return false;
-      }
-
-    }
-    // ======================Future================
-     const Future =() => {
-
-      const willIdx = Sentence.findIndex((word) => ["will"].includes(word))
-
-      if(willIdx == -1) return false;
-      const nextWord = Sentence[wasWereIdx + 1]
-      if (nextWord == "be") {
-        return true
-      }else{
-        return false;
-      }
-
-    }
-    // =====================Final Check================
-    if(Present()){
-      console.log("This is Present Continuous Sentence")
-    }else if(Past()) {
-      console.log("This is Past Continuous Sentence")
-    }else if(Future()) {
-      console.log("This is Future Continuous Sentence")
-
-    }else{
-      console.log("This is NOT Continuous Sentence")
+    if (present[0]) console.log("This is Present Perfect Tense", RemoveCommas(present[1]));
+    else if (past[0]) console.log("This is Past Perfect Tense", RemoveCommas(past[1]));
+    else if (future[0]) console.log("This is Future Perfect Tense", RemoveCommas(future[1]));
+    else console.log("This is not a Perfect Tense");
+  };
+  // --------------------------------------------------------------
+// ========================Indefinite==============================
+  const CheckIndefiniteTense = () => {
+    const present =() => {
+      const IsAmAre = ["is","am","are"]
 
     }
   }
-  
-  CheckContinuousTense()
-  console.log(`CheckPerfectTense : ${CheckPerfectTense()}`)
-
-
+  // =====================Invoke==========
+  CheckPerfectContinuousTense(); 
+  CheckPerfectTense();
+  CheckContinuousTense();
 }
 
-CheckWhichTense(ContinuousSentences[0]);
+//  Test
+// CheckWhichTense(Continuous[5]);
+
+const nlp = require("compromise");
+
+// Example sentence
+let doc = nlp("She goes to school by bus.");
+
+// Get verbs as a Compromise collection
+let verbs = doc.verbs().json(); // <-- convert to array of objects
+
+// Map through each verb and get forms
+const Verbtype = verbs.map(verb => {
+    const verbDoc = nlp(verb.text); // convert text back to Compromise for transformations
+    console.log(verb.text);
+    
+    console.log(verbDoc.verbs().toInfinitive().text());
+    
+    return {
+        text: verb.text,                     // original verb in sentence
+        FirstPerson: verbDoc.verbs().toInfinitive().text(),
+        present: verbDoc.verbs().toPresentTense().text(),
+        past: verbDoc.verbs().toPastTense().text(),
+        gerund: verbDoc.verbs().toGerund().text()
+    };
+});
+
+console.log(Verbtype);
+
+
+
+
 
 // function StartRecognition() {
 //   //---SpeechRecognition
@@ -258,5 +313,3 @@ CheckWhichTense(ContinuousSentences[0]);
 // }
 
 // console.log(findSubject("I play football."));
-
-
